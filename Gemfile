@@ -39,3 +39,5 @@ group :test do
   gem 'capybara'
   gem 'rack-test'
 end
+
+gem "standardrb", "~> 1.0"
