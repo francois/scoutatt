@@ -1,0 +1,3 @@
+#!/bin/sh
+bundle check || bundle install
+overmind start -f Procfile.dev
