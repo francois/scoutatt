@@ -41,3 +41,5 @@ group :test do
 end
 
 gem "standardrb", "~> 1.0"
+
+gem "byebug", "~> 11.1", groups: [:development, :test]
