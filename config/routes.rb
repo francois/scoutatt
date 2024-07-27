@@ -2,6 +2,11 @@
 
 module Scoutatt
   class Routes < Hanami::Routes
-    # Add your routes here. See https://guides.hanamirb.org/routing/overview/ for details.
+    get "/seasons", to: "seasons.index", as: :seasons
+    get "/seasons/new", to: "seasons.new", as: :new_season
+    post "/seasons", to: "seasons.create", as: :create_season
+    get "/seasons/:slug/edit", to: "seasons.edit", as: :edit_season
+    patch "/seasons/:slug", to: "seasons.update", as: :update_season
+    delete "/seasons/:slug", to: "seasons.destroy", as: :destroy_season
   end
 end

@@ -4,3 +4,4 @@ public/
 node_modules/
 spec/examples.txt
 .byebug_history
+db/*.sqlite

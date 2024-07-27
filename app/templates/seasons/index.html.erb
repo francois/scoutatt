@@ -1,0 +1,30 @@
+<h1>Scoutatt::Views::Seasons::Index</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Saison</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% seasons.each do |season| %>
+      <tr id="seasons-<%= season.id %>">
+        <td>
+          <a href="<%= routes.path(:edit_season, slug: season.slug) %>"><%= season.title %></a>
+          <%= form_for :season, routes.path(:destroy_season, slug: season.slug), method: :delete do |f| %>
+            <%= f.submit "X" %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+
+    <% if seasons.empty? %>
+      <tr>
+        <td>
+          <p>Aucune saison enregistrée</p>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<a id="add-season" href="/seasons/new">Ajouter une saison</a>

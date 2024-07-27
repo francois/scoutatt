@@ -1,0 +1,11 @@
+<h1>Modifier une saison</h1>
+
+<%= form_for :season, routes.path(:update_season, slug: season.slug), method: :patch do |f| %>
+  <p>
+    <%= f.label "Nom", for: :title %>
+    <%= f.text_field :title %>
+  </p>
+  <p>
+    <%= f.submit "Mettre à jour" %>
+  </p>
+<% end %>
