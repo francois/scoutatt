@@ -7,7 +7,49 @@ CREATE TABLE `seasons`(
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL
 );
-CREATE INDEX `seasons_title_index` ON `seasons`(`title`);
 CREATE UNIQUE INDEX `seasons_slug_index` ON `seasons`(`slug`);
+CREATE INDEX `seasons_title_index` ON `seasons`(`title`);
+CREATE TABLE `events`(
+  `id` integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+  `season_id` integer NOT NULL,
+  `slug` text NOT NULL,
+  `title` text NOT NULL,
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NOT NULL
+);
+CREATE UNIQUE INDEX `events_slug_index` ON `events`(`slug`);
+CREATE UNIQUE INDEX `events_season_id_title_index` ON `events`(
+  'season_id',
+  'title'
+);
+CREATE TABLE `slots`(
+  `id` integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+  `event_id` integer NOT NULL,
+  `slug` text NOT NULL,
+  `start_at` timestamp NOT NULL,
+  `num_registrations` integer DEFAULT(1) NOT NULL,
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NOT NULL
+);
+CREATE UNIQUE INDEX `slots_slug_index` ON `slots`(`slug`);
+CREATE UNIQUE INDEX `slots_event_id_start_at_index` ON `slots`(
+  'event_id',
+  'start_at'
+);
+CREATE TABLE `registrations`(
+  `id` integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+  `slot_id` integer NOT NULL,
+  `name` text NOT NULL,
+  `role` text NOT NULL,
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NOT NULL
+);
+CREATE INDEX `registrations_slot_id_name_index` ON `registrations`(
+  `slot_id`,
+  `name`
+);
 INSERT INTO schema_migrations (filename) VALUES
-('20240727171457_create_seasons.rb');
+('20240727171457_create_seasons.rb'),
+('20240728171518_create_events.rb'),
+('20240728171919_create_slots.rb'),
+('20240728173841_create_registrations.rb');

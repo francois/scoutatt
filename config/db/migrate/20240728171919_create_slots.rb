@@ -2,18 +2,18 @@
 
 ROM::SQL.migration do
   change do
-    create_table :seasons do
+    create_table :slots do
       primary_key :id
-
-      column :title, :text, null: false
+      foreign_key :event_id, null: false
       column :slug, :text, null: false
-      column :timezone, :text, null: false
+      column :start_at, :timestamp, null: false
+      column :num_registrations, :integer, null: false, default: 1
 
       column :created_at, :timestamp, null: false
       column :updated_at, :timestamp, null: false
 
       index :slug, unique: true
-      index :title
+      index %w[event_id start_at], unique: true
     end
   end
 end
