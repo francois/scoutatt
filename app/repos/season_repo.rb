@@ -3,6 +3,8 @@
 module Scoutatt
   module Repos
     class SeasonRepo < Scoutatt::DB::Repo
+      include Deps["relations.seasons"]
+
       def all_by_title = seasons.order(seasons[:title].desc).to_a
 
       def find_by_slug(slug) = seasons.where(slug:).one!
