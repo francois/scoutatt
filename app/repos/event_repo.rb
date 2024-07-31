@@ -5,6 +5,10 @@ module Scoutatt
     class EventRepo < Scoutatt::DB::Repo
       include Deps["relations.events"]
 
+      def find_all_by(season_id:)=events.where(season_id:).to_a
+
+      def find_by!(slug:)= events.where(slug:).one!
+
       def create(attributes)
         season_id = if attributes.include?(:season)
           attributes.fetch(:season).id

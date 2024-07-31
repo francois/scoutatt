@@ -5,6 +5,8 @@ module Scoutatt
     class SlotRepo < Scoutatt::DB::Repo
       include Deps["relations.slots"]
 
+      def find_all_by(event_id:) = slots.where(event_id:).to_a
+
       def create(attributes)
         event_id = if attributes.include?(:event)
           attributes.fetch(:event).id

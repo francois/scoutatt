@@ -1,0 +1,33 @@
+<h1><%= season.title %></h1>
+
+<%= form_for :registration, routes.path(:create_registrations) do |f| %>
+  <div>
+    <%= f.label "Votre adresse courriel", for: :email %>
+    <%= f.email_field :email, placeholder: "moi@hotmail.com", required: true %>
+  </div>
+
+  <% events.each do |event| %>
+    <h2><%= event.title %></h2>
+
+    <% slots[event.id].each do |slot| %>
+      <% f.fields_for("slot-#{slot.id}") do |g| %>
+        <div>
+          <h3><%= time slot.start_at, format: '%d/%m %H:%M' %></h3>
+          <% (registrations[slot.id] || []).each do |_reg| %>
+            <div>occupé</div>
+          <% end %>
+          <% (slot.num_registrations - (registrations[slot.id] || []).size).times do %>
+            <div>
+              <%= g.label "Prénom et nom", for: :name %>
+              <%= g.text_field :name %>
+              <%= g.label "Rôle", for: :role %>
+              <%= g.text_field :role, placeholder: "Unité ou rôle" %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <%= f.button "Enregistrer" %>
+<% end %>

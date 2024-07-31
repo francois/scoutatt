@@ -5,6 +5,13 @@ module Scoutatt
     class RegistrationRepo < Scoutatt::DB::Repo
       include Deps["relations.registrations"]
 
+      def find_all_by(slot_id:)
+        registrations
+          .where(slot_id:)
+          .order("lower(coalesce(name, ''))", :id)
+          .to_a
+      end
+
       def create(attributes)
         attributes = attributes.merge(slot_id: attributes.delete(:slot).id) if attributes.include?(:slot)
 
