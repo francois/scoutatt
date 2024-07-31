@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'optparse'
+
+options = {
+  environment: 'development'
+}
+
+OptionParser.new do |t|
+  t.on('-e=ENV', '--environment=ENV', 'The environment you wish to connect to') do |env|
+    options[:environment] = env
+  end
+end
+
+db = case options.fetch(:environment)
+     when 'development' then 'db/scoutatt.sqlite'
+     when 'test' then 'db/scoutatt_test.sqlite'
+     else
+       raise ArgumentError, "Unknown environment: #{options[:environment].inspect}"
+     end
+
+exec("sqlite3 -header -table #{db}")
