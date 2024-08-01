@@ -1,3 +1,4 @@
+.overmind.sock
 .env*.local
 log/*
 public/
