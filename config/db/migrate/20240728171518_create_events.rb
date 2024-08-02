@@ -7,6 +7,7 @@ ROM::SQL.migration do
       foreign_key :season_id, null: false
       column :slug, :text, null: false
       column :title, :text, null: false
+      column :max_registrations, :integer, null: false
 
       column :created_at, :timestamp, null: false
       column :updated_at, :timestamp, null: false

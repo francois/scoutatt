@@ -10,18 +10,13 @@ module Scoutatt
           required(:slug).filled(:string)
           required(:registration).hash do
             required(:email).filled(:string)
-            hash do
-              hash do
-                required(:name).filled(:string)
-                required(:role).filled(:string)
-              end
-            end
           end
         end
 
         def handle(request, _response)
           return unless request.params.valid?
 
+          raise request.params.inspect
           raise request.params.to_h.inspect
         end
       end

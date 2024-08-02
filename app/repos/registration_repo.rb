@@ -5,15 +5,15 @@ module Scoutatt
     class RegistrationRepo < Scoutatt::DB::Repo
       include Deps["relations.registrations"]
 
-      def find_all_by(slot_id:)
+      def find_all_by(event_id:)
         registrations
-          .where(slot_id:)
+          .where(event_id:)
           .order("lower(coalesce(name, ''))", :id)
           .to_a
       end
 
       def create(attributes)
-        attributes = attributes.merge(slot_id: attributes.delete(:slot).id) if attributes.include?(:slot)
+        attributes = attributes.merge(event_id: attributes.delete(:event).id) if attributes.include?(:event)
 
         attrs = attributes.merge(
           slug: SecureRandom.alphanumeric(4).downcase,

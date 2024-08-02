@@ -6,7 +6,6 @@ module Scoutatt
       class Show < Scoutatt::View
         include Deps["repos.season_repo"]
         include Deps["repos.event_repo"]
-        include Deps["repos.slot_repo"]
         include Deps["repos.registration_repo"]
 
         expose :season do |slug:|
@@ -18,16 +17,10 @@ module Scoutatt
             .sort_by(&:title)
         end
 
-        expose :slots do |events|
-          slot_repo.find_all_by(event_id: events.map(&:id))
-            .sort_by(&:start_at)
-            .group_by(&:event_id)
-        end
-
-        expose :registrations do |slots|
-          registration_repo.find_all_by(slot_id: slots.values.flatten.map(&:id))
+        expose :registrations do |events|
+          registration_repo.find_all_by(event_id: events.map(&:id))
             .sort_by { [_1.name || "", _1.id] }
-            .group_by(&:slot_id)
+            .group_by(&:event_id)
         end
       end
     end
