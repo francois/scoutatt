@@ -12,7 +12,7 @@
   <% end %>
 <% end %>
 
-<p>Places disponibles: <%= total_registrations %>, ou <%= total_registrations >> 1 %> personnes</p>
+<p><%= total_registrations %> places disponibles, ou <%= total_registrations >> 1 %> personnes à raison de 2 quarts de travail par personne.</p>
 
 <h3>Nouvel événement</h3>
 <%= form_for(:event, routes.path(:create_event, slug: season.slug)) do |f| %>
