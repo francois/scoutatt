@@ -28,6 +28,7 @@ CREATE TABLE `registrations`(
   `event_id` integer NOT NULL,
   `name` text NOT NULL,
   `role` text NOT NULL,
+  `notification_email` text NOT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL
 );

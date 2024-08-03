@@ -5,8 +5,10 @@ ROM::SQL.migration do
     create_table :registrations do
       primary_key :id
       foreign_key :event_id, null: false
+
       column :name, :text, null: false
       column :role, :text, null: false
+      column :notification_email, :text, null: false
 
       column :created_at, :timestamp, null: false
       column :updated_at, :timestamp, null: false

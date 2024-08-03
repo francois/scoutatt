@@ -9,6 +9,8 @@ module Scoutatt
 
       def find_by!(slug:)= events.where(slug:).one!
 
+      def event_ids_by_slug = events.to_a.map { [_1[:slug], _1[:id]] }.to_h
+
       def create(attributes)
         season_id = if attributes.include?(:season)
           attributes.fetch(:season).id
