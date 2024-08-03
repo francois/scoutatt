@@ -10,6 +10,13 @@ module Scoutatt
     patch "/seasons/:slug", to: "seasons.update", as: :update_season
     delete "/seasons/:slug", to: "seasons.destroy", as: :destroy_season
 
+    get "/seasons/:slug/events", to: "events.index", as: :events
+    post "/seasons/:slug/events", to: "events.create", as: :create_event
+
     post "/registrations/:slug", to: "registrations.create", as: :create_registrations
+
+    post "/events", to: "events.create"
+    patch "/events/:slug", to: "events.update", as: :update_event
+    delete "/events/:slug", to: "events.destroy", as: :destroy_event
   end
 end

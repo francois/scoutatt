@@ -1,10 +1,20 @@
 <h1><%= season.title %></h1>
-<% count = -1 %>
+<h2>Intructions</h2>
+<p>
+Inscrivez votre ou vos enfants aux différentes activités du Groupe. Si vous
+désirez rester, n'oubliez pas d'inscrire votre nom à vous aussi!
+</p>
 
+<% count = -1 %>
 <%= form_for :registration, routes.path(:create_registrations, slug: season.slug) do |f| %>
   <div>
-    <%= f.label "Votre adresse courriel", for: :email %>
-    <%= f.email_field :email, placeholder: "moi@hotmail.com", required: true %>
+    <%= f.label "À quelle adresse courriel voulez-vous recevoir un rappel?", for: :email %>
+    <br>
+    <%= f.email_field :email, placeholder: "moi@hotmail.com", required: true, size: 50 %>
+    <p>
+    Vous recevrez un courriel de rappel un ou deux jours avant l'événement à
+    cette adresse courriel.
+    </p>
   </div>
 
   <% f.fields_for :events do |f0| %>

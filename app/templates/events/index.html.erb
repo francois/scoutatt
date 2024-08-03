@@ -1,0 +1,52 @@
+<h1><%= season.title %></h1>
+<h2>Événements de la saison</h2>
+
+<% events.each do |event| %>
+  <%= form_for(:event, routes.path(:update_event, slug: event.slug), values: {event:}, method: :patch) do |f| %>
+    <%= f.text_field :title, size: 50 %>
+    <%= f.number_field :max_registrations, min: 1, max: 100 %>
+    <%= f.submit "Mettre à jour" %>
+  <% end %>
+  <%= form_for(:event, routes.path(:destroy_event, slug: event.slug), method: :delete) do |f| %>
+    <%= f.submit "Détruire" %>
+  <% end %>
+<% end %>
+
+<p>Places disponibles: <%= total_registrations %></p>
+
+<h3>Nouvel événement</h3>
+<%= form_for(:event, routes.path(:create_event, slug: season.slug)) do |f| %>
+  <div>
+    <%= f.label "Titre", for: :title %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div>
+    <%= f.label "Dates", for: :dates %>
+    <%= f.text_field :dates %>
+  </div>
+
+  <div>
+    <%= f.label "Heure de début", for: :min_hour %>
+    <%= f.number_field :min_hour, min: 0, max: 23 %>
+  </div>
+
+  <div>
+    <%= f.label "Heure de fin", for: :max_hour %>
+    <%= f.number_field :max_hour, min: 0, max: 23 %>
+  </div>
+
+  <div>
+    <%= f.label "Heures par quart de travail", for: :hours_per_shift %>
+    <%= f.number_field :hours_per_shift, min: 1, max: 8 %>
+  </div>
+
+  <div>
+    <%= f.label "Places par quart de travail", for: :registrations_per_shift %>
+    <%= f.number_field :registrations_per_shift, min: 1, max: 100 %>
+  </div>
+
+  <div>
+    <%= f.submit "Enregistrer" %>
+  </div>
+<% end %>

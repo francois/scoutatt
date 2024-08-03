@@ -13,7 +13,7 @@ module Scoutatt
         end
 
         expose :events do |season|
-          event_repo.find_all_by(season_id: season.id)
+          event_repo.find_all_by_season_id(season.id)
             .sort_by(&:title)
         end
 

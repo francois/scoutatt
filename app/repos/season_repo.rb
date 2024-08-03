@@ -7,6 +7,8 @@ module Scoutatt
 
       def all_by_title = seasons.order(seasons[:title].desc).to_a
 
+      def find_by_id!(id) = seasons.where(id:).one!
+
       def find_by!(slug:) = seasons.where(slug:).one!
 
       def delete_by_slug!(slug) = seasons.where(slug:).delete
