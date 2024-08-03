@@ -12,7 +12,7 @@ module Scoutatt
         end
 
         expose :events do |season|
-          event_repo.find_all_by_season_id(season.id).sort_by(&:title)
+          event_repo.find_all_by_season_id(season.id).sort_by { [_1.start_at, _1.title] }
         end
 
         expose :total_registrations do |events|

@@ -15,14 +15,12 @@ CREATE TABLE `events`(
   `slug` text NOT NULL,
   `title` text NOT NULL,
   `max_registrations` integer NOT NULL,
+  `start_at` datetime NOT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL
 );
 CREATE UNIQUE INDEX `events_slug_index` ON `events`(`slug`);
-CREATE UNIQUE INDEX `events_season_id_title_index` ON `events`(
-  'season_id',
-  'title'
-);
+CREATE INDEX `events_season_id_index` ON `events`('season_id');
 CREATE TABLE `registrations`(
   `id` integer NOT NULL PRIMARY KEY AUTOINCREMENT,
   `event_id` integer NOT NULL,

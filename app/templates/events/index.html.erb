@@ -12,7 +12,7 @@
   <% end %>
 <% end %>
 
-<p>Places disponibles: <%= total_registrations %></p>
+<p>Places disponibles: <%= total_registrations %>, ou <%= total_registrations >> 1 %> personnes</p>
 
 <h3>Nouvel événement</h3>
 <%= form_for(:event, routes.path(:create_event, slug: season.slug)) do |f| %>

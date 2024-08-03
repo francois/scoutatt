@@ -28,13 +28,14 @@ module Scoutatt
 
           title = request.params[:event][:title]
           dates = CSV.parse_line(request.params[:event][:dates])
-          hours = (request.params[:event][:min_hour]...request.params[:event][:max_hour]).step(request.params[:event][:hours_per_shift]).to_a
+          hours = (request.params[:event][:min_hour]...request.params[:event][:max_hour])
+            .step(request.params[:event][:hours_per_shift])
+            .to_a
 
           new_events = Array(title).product(dates, hours).map do |title, date, hour|
             start_at = Time.parse("#{date} #{hour}:00")
             {
-              season:,
-              title: "#{start_at.strftime("%Y-%m-%d %H:%M")} #{title}",
+              season:, start_at:, title:,
               max_registrations: request.params[:event][:registrations_per_shift]
             }
           end
