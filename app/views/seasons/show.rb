@@ -9,7 +9,7 @@ module Scoutatt
         include Deps["repos.registration_repo"]
 
         expose :season do |slug:|
-          season_repo.find_by(slug:)
+          season_repo.find_by!(slug:)
         end
 
         expose :events do |season|
