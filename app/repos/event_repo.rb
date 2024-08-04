@@ -13,11 +13,7 @@ module Scoutatt
 
       def event_ids_by_slug = events.to_a.map { [_1[:slug], _1[:id]] }.to_h
 
-      def delete_by_slug(slug)
-        event = find_by!(slug:)
-        events.where(slug:).delete
-        event
-      end
+      def delete_by_slug(slug) = events.where(slug:).changeset(:delete).commit
 
       def create_many(attributes)
         attrs = attributes.map do
