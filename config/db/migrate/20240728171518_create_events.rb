@@ -4,7 +4,7 @@ ROM::SQL.migration do
   change do
     create_table :events do
       primary_key :id
-      foreign_key :season_id, null: false
+      foreign_key :season_id, null: false, on_update: :cascade, on_delete: :cascade
       column :slug, :text, null: false
       column :title, :text, null: false
       column :max_registrations, :integer, null: false
