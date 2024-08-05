@@ -1,13 +1,17 @@
 # auto_register: false
 # frozen_string_literal: true
 
+require "tzinfo"
+
 module Scoutatt
   module Views
     module Helpers
-      def time(timestamp)
+      def time(timestamp, timezone:)
         format = "%Y-%m-%dT%H:%M:%S%z"
-        tag.time(datetime: timestamp.utc.strftime(format), title: timestamp.strftime(format)) do
-          timestamp.strftime("%-d %-b %Y, %H:%M")
+        tz = TZInfo::Timezone.get(timezone)
+        tsutc = timestamp.utc
+        tag.time(datetime: tsutc.strftime(format), title: tz.utc_to_local(tsutc).strftime(format)) do
+          tz.utc_to_local(tsutc).strftime("%-d %-b %Y, %H:%M")
         end
       end
 

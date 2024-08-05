@@ -1,4 +1,4 @@
-<h1><%= event.title %></h1>
+<h1><%= time event.start_at, timezone: season.timezone %> <%= event.title %></h1>
 <h2><%= season.title %></h2>
 
 <% combined.each do |role, attendances| %>

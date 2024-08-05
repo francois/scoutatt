@@ -45,3 +45,5 @@ gem "standardrb", "~> 1.0"
 gem "byebug", "~> 11.1", groups: [:development, :test]
 
 gem "database_cleaner-sequel", "~> 2.0", group: :test
+
+gem "tzinfo", "~> 2.0"
