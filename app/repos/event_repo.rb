@@ -47,7 +47,7 @@ module Scoutatt
       end
 
       def update(slug, attributes)
-        attrs = attributes.merge(updated_at: Time.now)
+        attrs = {updated_at: Time.now}.merge(attributes)
         events.where(slug:).changeset(:update, attrs).commit
       end
     end
