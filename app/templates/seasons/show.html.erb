@@ -20,10 +20,7 @@ désirez rester, n'oubliez pas d'inscrire votre nom à vous aussi!
   <% f.fields_for :events do |f0| %>
     <% events.each do |event| %>
       <h2><%= event.title %></h2>
-
-      <% Array(registrations[event.id]).each do |registration| %>
-        <div>occupé</div>
-      <% end %>
+      <p><%= time event.start_at, format: "%Y-%m-%d %H:%M" %></p>
 
       <% (event.max_registrations - (registrations[event.id] || []).size).times do %>
         <% count += 1 %>
@@ -31,11 +28,15 @@ désirez rester, n'oubliez pas d'inscrire votre nom à vous aussi!
           <div>
             <%= f1.hidden_field :event_id, value: event.slug %>
             <%= f1.label "Prénom et nom", for: :name %>
-            <%= f1.text_field :name, placeholder: "John Doe" %>
+            <%= f1.text_field :name, placeholder: "Pierre Tremblay", size: 30 %>
             <%= f1.label "Rôle", for: :role %>
-            <%= f1.text_field :role, placeholder: "Unité ou rôle" %>
+            <%= f1.text_field :role, placeholder: "Castors, Chouettes, Directeur, etc.", size: 30 %>
           </div>
         <% end %>
+      <% end %>
+
+      <% Array(registrations[event.id]).each do |registration| %>
+        <div>occupé</div>
       <% end %>
     <% end %>
     </div>
