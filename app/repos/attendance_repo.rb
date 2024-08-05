@@ -3,7 +3,7 @@
 module Scoutatt
   module Repos
     class AttendanceRepo < Scoutatt::DB::Repo
-      include Deps['relations.attendances']
+      include Deps["relations.attendances"]
 
       def find_all_by(event_id:)
         attendances
@@ -31,7 +31,7 @@ module Scoutatt
 
       def update(slug, attributes)
         attributes[:event_id] = attributes.delete(:event).id if attributes.include?(:event)
-        attributes = { updated_at: Time.now }.merge(attributes)
+        attributes = {updated_at: Time.now}.merge(attributes)
 
         attendances.where(slug:).changeset(:update, attributes).commit
       end

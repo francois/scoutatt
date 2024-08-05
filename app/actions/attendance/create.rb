@@ -4,8 +4,8 @@ module Scoutatt
   module Actions
     module Attendance
       class Create < Scoutatt::Action
-        include Deps['repos.attendance_repo']
-        include Deps['repos.event_repo']
+        include Deps["repos.attendance_repo"]
+        include Deps["repos.event_repo"]
 
         params do
           required(:event_slug).filled(:string)

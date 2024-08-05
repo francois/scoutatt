@@ -4,7 +4,7 @@
 module Scoutatt
   module Views
     module Helpers
-      def time(timestamp, format: '%Y-%m-%dT%H:%M:%S%z')
+      def time(timestamp, format: "%Y-%m-%dT%H:%M:%S%z")
         timestamp.strftime(format)
       end
 

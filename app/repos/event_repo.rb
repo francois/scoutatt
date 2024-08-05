@@ -3,7 +3,7 @@
 module Scoutatt
   module Repos
     class EventRepo < Scoutatt::DB::Repo
-      include Deps['relations.events']
+      include Deps["relations.events"]
 
       def find_all_by_season_id(season_id) = events.where(season_id:).to_a
 
@@ -32,10 +32,10 @@ module Scoutatt
 
       def create(attributes)
         season_id = if attributes.include?(:season)
-                      attributes.fetch(:season).id
-                    else
-                      attributes.fetch(:season_id)
-                    end
+          attributes.fetch(:season).id
+        else
+          attributes.fetch(:season_id)
+        end
         attrs = {
           season_id:, season: nil,
           slug: SecureRandom.alphanumeric(4).downcase,

@@ -3,7 +3,7 @@
 module Scoutatt
   module Repos
     class RegistrationRepo < Scoutatt::DB::Repo
-      include Deps['relations.registrations']
+      include Deps["relations.registrations"]
 
       def find_by!(slug:) = registrations.where(slug:).one!
 
