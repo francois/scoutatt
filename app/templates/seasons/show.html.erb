@@ -2,11 +2,31 @@
 <h2>Intructions</h2>
 <p>
 Inscrivez votre ou vos enfants aux différentes activités du Groupe. Si vous
-désirez rester, n'oubliez pas d'inscrire votre nom à vous aussi!
+resterez, n'oubliez pas d'inscrire votre nom à vous aussi!
 </p>
+<p>
+Les règles de notre Groupe demandent à ce que chaque enfant travaille 2 quarts de travail de 2 heures chacun (4 heures
+de bénévolat). S'il n'est pas disponible, un représentant pourra venir à sa place.
+</p>
+
+<h3>Exemples</h3>
+<dl>
+  <dt>Votre enfant viendra seul:</dt>
+  <dd><ol><li>Nom: Pierre Tremblay, Rôle: Castors</li></ol></dd>
+  <dt>Vous et votre enfant viendrez:</dt>
+  <dd>
+    <ol>
+      <li>Nom: Pierre Tremblay, Rôle: Castors</li>
+      <li>Nom: Papa de Pierre Tremblay, Rôle: Castors</li>
+    </ol>
+  </dd>
+  <dt>Grand-maman viendra <strong>à la place de</strong> votre enfant</dt>
+  <dd><ol><li>Nom: Grand-maman de Pierre Tremblay, Rôle: Castors</li></ol></dd>
+</dl>
 
 <% count = -1 %>
 <%= form_for :registration, routes.path(:create_registrations, slug: season.slug) do |f| %>
+  <h2>Inscription</h2>
   <div>
     <%= f.label "À quelle adresse courriel voulez-vous recevoir un rappel?", for: :email %>
     <br>
