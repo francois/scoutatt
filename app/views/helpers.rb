@@ -4,8 +4,11 @@
 module Scoutatt
   module Views
     module Helpers
-      def time(timestamp, format: "%Y-%m-%dT%H:%M:%S%z")
-        timestamp.strftime(format)
+      def time(timestamp)
+        format = "%Y-%m-%dT%H:%M:%S%z"
+        tag.time(datetime: timestamp.utc.strftime(format), title: timestamp.strftime(format)) do
+          timestamp.strftime("%-d %-b %Y, %H:%M")
+        end
       end
 
       def titleize(string)
