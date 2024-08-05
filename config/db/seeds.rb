@@ -5,7 +5,7 @@ event_repo = Hanami.app["repos.event_repo"]
 registration_repo = Hanami.app["repos.registration_repo"]
 
 season0 = season_repo.create(slug: "vpld", title: "Saison 2023-2024", timezone: "America/Montreal")
-event0 = event_repo.create(season: season0, title: "2024-01 IGA Noël", max_registrations: 6,
+event0 = event_repo.create(season: season0, slug: "nhnl", title: "2024-01 IGA Noël", max_registrations: 6,
   start_at: Time.local(2024, 1, 10, 15))
 registration_repo.create(event: event0, name: "Francois", role: "Animateur responsable, Chouettes",
   notification_email: "francois@example.org")

@@ -1,0 +1,51 @@
+<h1><%= event.title %></h1>
+<h2><%= season.title %></h2>
+
+<% combined.each do |role, attendances| %>
+  <h3><%= titleize(role) %></h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Absent</th>
+        <th>Présent</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% attendances.each do |attendance| %>
+      <tr>
+        <td><%= attendance.name %></td>
+        <td>
+          <% if attendance.absent? %>
+            <%= form_for :attendance, routes.path(:create_attendance_from_registration, registration_slug: attendance.slug), method: :post do |f| %>
+              <%= f.submit "Marquer présent" %>
+            <% end %>
+          <% end %>
+        </td>
+
+        <td>
+          <% if attendance.present? %>
+            <%= form_for :attendance, routes.path(:destroy_attendance, registration_slug: attendance.slug), method: :delete do |f| %>
+              <%= f.submit "Marquer absent" %>
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<%= form_for(:attendance, routes.path(:create_attendance, event_slug: event.slug), method: :post) do |f| %>
+  <div>
+    <%= f.label "Prénom et nom", for: :name %>
+    <%= f.text_field :name, placeholder: "John Smith" %>
+  </div>
+  <div>
+    <%= f.label "Rôle", for: :role %>
+    <%= f.text_field :role, placeholder: "Éclaireurs" %>
+  </div>
+  <div>
+    <%= f.submit "Enregistrer" %>
+  </div>
+<% end %>
