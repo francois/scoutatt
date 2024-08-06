@@ -50,7 +50,7 @@ de bénévolat). S'il n'est pas disponible, un représentant pourra venir à sa 
             <%= f1.label "Prénom et nom", for: :name %>
             <%= f1.text_field :name, placeholder: "Pierre Tremblay", size: 30 %>
             <%= f1.label "Rôle", for: :role %>
-            <%= f1.text_field :role, placeholder: "Castors, Chouettes, Directeur, etc.", size: 30 %>
+            <%= f1.text_field :role, placeholder: "Castors, Chouettes, Directeur, etc.", size: 30, list: "roles" %>
           </div>
         <% end %>
       <% end %>
@@ -64,3 +64,12 @@ de bénévolat). S'il n'est pas disponible, un représentant pourra venir à sa 
 
   <%= f.button "Enregistrer" %>
 <% end %>
+<datalist id="roles">
+  <option>Castors</option>
+  <option>Aigles</option>
+  <option>Chouettes</option>
+  <option>Éclaireurs</option>
+  <option>Pionniers</option>
+  <option>Routiers</option>
+  <option>Gestion</option>
+</datalist>
