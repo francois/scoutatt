@@ -9,7 +9,9 @@
     <% seasons.each do |season| %>
       <tr id="seasons-<%= season.id %>">
         <td>
-          <a href="<%= routes.path(:edit_season, slug: season.slug) %>"><%= season.title %></a>
+          <%= link_to season.title, routes.path(:edit_season, slug: season.slug) %>
+          <%= link_to "Gestion des événements de #{season.title}", routes.path(:events, slug: season.slug) %>
+          <%= link_to "Inscription aux événements de #{season.title}", routes.path(:show_season, slug: season.slug) %>
           <%= form_for :season, routes.path(:destroy_season, slug: season.slug), method: :delete do |f| %>
             <%= f.submit "X" %>
           <% end %>
