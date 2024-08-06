@@ -43,8 +43,13 @@
   </div>
 
   <div>
-    <%= f.label "Places par quart de travail", for: :registrations_per_shift %>
+    <%= f.label "Nombre de places par quart de travail", for: :registrations_per_shift %>
     <%= f.number_field :registrations_per_shift, min: 1, max: 100 %>
+  </div>
+
+  <div>
+    <%= f.label "Nombre de responsables par quart de travail", for: :registrations_per_shift %>
+    <%= f.number_field :adult_registrations_per_shift, min: 1, max: 100 %>
   </div>
 
   <div>

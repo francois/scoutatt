@@ -18,6 +18,7 @@ module Scoutatt
             required(:max_hour).filled(:integer, gteq?: 0, lteq?: 24)
             required(:hours_per_shift).filled(:integer, gteq?: 1, lt?: 24)
             required(:registrations_per_shift).filled(:integer, gteq?: 1, lt?: 100)
+            required(:adult_registrations_per_shift).filled(:integer, gteq?: 1, lt?: 100)
           end
         end
 
@@ -32,12 +33,18 @@ module Scoutatt
             .step(request.params[:event][:hours_per_shift])
             .to_a
 
-          new_events = Array(title).product(dates, hours).map do |title, date, hour|
+          new_events = Array(title).product(dates, hours).flat_map do |title, date, hour|
             start_at = Time.parse("#{date} #{hour}:00")
-            {
-              season:, start_at:, title:,
-              max_registrations: request.params[:event][:registrations_per_shift]
-            }
+            [
+              {
+                season:, start_at:, title:,
+                max_registrations: request.params[:event][:registrations_per_shift]
+              },
+              {
+                season:, start_at:, title: "#{title} (Responsables)",
+                max_registrations: request.params[:event][:adult_registrations_per_shift]
+              }
+            ]
           end
           event_repo.create_many(new_events)
 
