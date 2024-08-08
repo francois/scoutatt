@@ -1,58 +1,124 @@
-<h1><%= season.title %></h1>
-<h2>Événements de la saison</h2>
-
-<% events.each do |event| %>
-  <%= form_for(:event, routes.path(:update_event, slug: event.slug), values: {event:}, method: :patch) do |f| %>
-    <%= time event.start_at, timezone: season.timezone %>
-    <%= f.text_field :title, size: 50 %>
-    <%= f.number_field :max_registrations, min: 1, max: 100 %>
-    <%= f.submit "Mettre à jour" %>
-  <% end %>
-  <%= form_for(:event, routes.path(:destroy_event, slug: event.slug), method: :delete) do |f| %>
-    <%= f.submit "Détruire" %>
-  <% end %>
-<% end %>
-
-<p><%= events.size %> événements, <%= total_registrations %> places disponibles, ou <%= total_registrations >> 1 %> personnes à raison de 2 quarts de travail par personne.</p>
-
-<h3>Nouvel événement</h3>
-<%= form_for(:event, routes.path(:create_event, slug: season.slug)) do |f| %>
-  <div>
-    <%= f.label "Titre", for: :title %>
-    <%= f.text_field :title %>
+<div class="row">
+  <div class="col">
+    <h1><%= season.title %></h1>
   </div>
 
-  <div>
-    <%= f.label "Dates", for: :dates %>
-    <%= f.text_field :dates %>
+  <div class="row">
+    <div class="col-md">
+      <% events.group_by(&:start_at).each do |start_at, evs| %>
+        <div class="row py-2 my-2">
+          <div class="col bg-body-secondary">
+            <h2><%= time start_at, timezone: 'America/Montreal' %></h2>
+          </div>
+        </div>
+        <% evs.each do |event| %>
+          <div class="row">
+            <div class="col">
+              <%= form_for(:event, routes.path(:update_event, slug: event.slug), values: {event:}, method: :patch) do |f| %>
+                <div class="row my-1">
+                  <div class="col">
+                    <div class="form-floating">
+                      <%= f.text_field :title, class: "form-control" %>
+                      <%= f.label "Titre", for: :title, class: "form-label" %>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-floating">
+                      <%= f.number_field :max_registrations, min: 1, max: 100, class: "form-control" %>
+                      <%= f.label "Places", for: :max_registrations, class: "form-label" %>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <%= f.submit "Mettre à jour", class: "btn btn-sm btn-primary" %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+
+      <p><%= events.size %> événements, <%= total_registrations %> places, ou <%= total_registrations >> 1 %> personnes à raison de 2 quarts de travail par personne.</p>
+    </div>
   </div>
 
-  <div>
-    <%= f.label "Heure de début", for: :min_hour %>
-    <%= f.number_field :min_hour, min: 0, max: 23 %>
-  </div>
+  <div class="col-md">
+    <h2 class="bg-body-secondary">Nouvel événement</h2>
+    <%= form_for(:event, routes.path(:create_event, slug: season.slug)) do |f| %>
+      <div class="mb-3 form-floating">
+        <%= f.text_field :title, class: "form-control", required: true %>
+        <%= f.label "Titre", for: :title, class: "form-label" %>
+        <% if request.params.errors.include?(:title) %>
+          <p class="form-text">
+          Inscrivez un nom par lequel les parents pourront reconnaître l'événement.
+          </p>
+        <% end %>
+      </div>
 
-  <div>
-    <%= f.label "Heure de fin", for: :max_hour %>
-    <%= f.number_field :max_hour, min: 0, max: 24 %>
-  </div>
+      <div class="mb-3 form-floating">
+        <%= f.text_field :dates, class: "form-control", pattern: "\\d{4}-\\d{2}-\\d{2}(?:\\s*,\\s*\\d{4}-\\d{2}-\\d{2})*", required: true %>
+        <%= f.label "Dates", for: :dates, class: "form-label" %>
+        <% if request.params.errors.include?(:dates) %>
+          <p class="form-text">
+          Inscrivez une ou plusieurs dates en format YYYY-MM-DD, séparées par des virgules.
+          </p>
+        <% end %>
+      </div>
 
-  <div>
-    <%= f.label "Heures par quart de travail", for: :hours_per_shift %>
-    <%= f.number_field :hours_per_shift, min: 1, max: 8 %>
-  </div>
+      <div class="mb-3 form-floating">
+        <%= f.number_field :min_hour, min: 0, max: 23, class: "form-control", required: true %>
+        <%= f.label "Heure de début", for: :min_hour, class: "form-label" %>
+        <% if request.params.errors.include?(:min_hour) %>
+          <p class="form-text">
+          Inscrivez l'heure de début de l'activité, un nombre en 0 et 23.
+          </p>
+        <% end %>
+      </div>
 
-  <div>
-    <%= f.label "Nombre de places par quart de travail", for: :registrations_per_shift %>
-    <%= f.number_field :registrations_per_shift, min: 1, max: 100 %>
-  </div>
+      <div class="mb-3 form-floating">
+        <%= f.number_field :max_hour, min: 1, max: 24, class: "form-control", required: true %>
+        <%= f.label "Heure de fin", for: :max_hour, class: "form-label" %>
+        <% if request.params.errors.include?(:max_hour) %>
+          <p class="form-text">
+          Inscrivez l'heure de fin de l'activité, un nombre en 1 et 24.
+          </p>
+        <% end %>
+      </div>
 
-  <div>
-    <%= f.label "Nombre de responsables par quart de travail", for: :registrations_per_shift %>
-    <%= f.number_field :adult_registrations_per_shift, min: 1, max: 100 %>
-  </div>
+      <div class="mb-3 form-floating">
+        <%= f.number_field :hours_per_shift, min: 1, max: 8, class: "form-control", required: true %>
+        <%= f.label "Heures par quart de travail", for: :hours_per_shift, class: "form-label" %>
+        <% if request.params.errors.include?(:hours_per_shift) %>
+          <p class="form-text">
+          Inscrivez le nombre d'heures de travail par quart de travail, un nombre entre 1 et 8.
+          </p>
+        <% end %>
+      </div>
 
-  <div>
-    <%= f.submit "Enregistrer" %>
+      <div class="mb-3 form-floating">
+        <%= f.number_field :registrations_per_shift, min: 1, max: 100, class: "form-control", required: true %>
+        <%= f.label "Nombre de places par quart de travail", for: :registrations_per_shift, class: "form-label" %>
+        <% if request.params.errors.include?(:registrations_per_shift) %>
+          <p class="form-text">
+          Inscrivez le nombre de jeunes désiré par quart de travail, un nombre entre 1 et 100.
+          </p>
+        <% end %>
+      </div>
+
+      <div class="mb-3 form-floating">
+        <%= f.number_field :adult_registrations_per_shift, min: 1, max: 100, class: "form-control", required: true %>
+        <%= f.label "Nombre de responsables par quart de travail", for: :registrations_per_shift, class: "form-label" %>
+        <% if request.params.errors.include?(:adult_registrations_per_shift) %>
+          <p class="form-text">
+          Inscrivez le nombre d'adultes responsables désiré par quart de travail, un nombre entre 1 et 100.
+          </p>
+        <% end %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.submit "Enregistrer", class: "btn btn-primary" %>
+        <%= link_to "Retour à la liste des saisons", routes.path(:seasons), class: "" %>
+      </div>
+    <% end %>
   </div>
-<% end %>
+</div>

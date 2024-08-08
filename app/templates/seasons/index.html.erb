@@ -1,32 +1,50 @@
-<h1>Scoutatt::Views::Seasons::Index</h1>
-<table>
-  <thead>
-    <tr>
-      <th>Saison</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% seasons.each do |season| %>
-      <tr id="seasons-<%= season.id %>">
-        <td>
-          <%= link_to season.title, routes.path(:edit_season, slug: season.slug) %>
-          <%= link_to "Gestion des événements de #{season.title}", routes.path(:events, slug: season.slug) %>
-          <%= link_to "Inscription aux événements de #{season.title}", routes.path(:show_season, slug: season.slug) %>
-          <%= form_for :season, routes.path(:destroy_season, slug: season.slug), method: :delete do |f| %>
-            <%= f.submit "X" %>
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
+<div class="row">
+  <div class="col">
+    <h1>Liste des saisons</h1>
+  </div>
+</div>
 
-    <% if seasons.empty? %>
-      <tr>
-        <td>
-          <p>Aucune saison enregistrée</p>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<% if seasons.any? %>
+  <div class="row">
+    <div class="col">
+      <% seasons.each do |season| %>
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title"><%= season.title %></h5>
+            <p class="card-text">
+            <% if num_events[season.id] %>
+              <%= num_events[season.id] %> événements,
+            <% else %>
+              Aucun événements
+            <% end %>
+            <% if total_registrations[season.id] %>
+              <%= num_registered_registrations[season.id] %> / <%= total_registrations[season.id] %> =
+              <%= format_number(100.0 * num_registered_registrations[season.id] / total_registrations[season.id], precision: 1, delimiter: " ", separator: ",") %> %
+            <% end %>
+            </p>
 
-<a id="add-season" href="/seasons/new">Ajouter une saison</a>
+            <%= link_to "Gestion", routes.path(:events, slug: season.slug), class: "card-link" %>
+            <%= link_to "Inscriptions", routes.path(:show_season, slug: season.slug), class: "card-link" %>
+            <%= form_for :season, routes.path(:destroy_season, slug: season.slug), method: :delete do |f| %>
+              <%= f.submit "Détruire", class: "btn btn-danger btn-sm card-link" %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<% if seasons.empty? %>
+  <div class="row">
+    <div class="col">
+      <p>Aucune saison enregistrée</p>
+    </div>
+  </div>
+<% end %>
+
+<div class="row my-2">
+  <div class="col">
+    <%= link_to "Ajouter une saison", routes.path(:new_season), id: "add-season", class: "btn btn-primary" %>
+  </div>
+</div>

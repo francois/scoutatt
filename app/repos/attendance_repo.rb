@@ -8,7 +8,7 @@ module Scoutatt
       def find_all_by(event_id:)
         attendances
           .where(event_id:)
-          .order("lower(coalesce(name, ''))", :id)
+          .order(Sequel.function(:lower, Sequel.function(:coalesce, Sequel[:name], Sequel.lit("''"))), :id)
           .to_a
       end
 

@@ -4,6 +4,8 @@ module Scoutatt
   module Repos
     class SeasonRepo < Scoutatt::DB::Repo
       include Deps["relations.seasons"]
+      include Deps["relations.events"]
+      include Deps["relations.registrations"]
 
       def all_by_title = seasons.order(seasons[:title].desc).to_a
 

@@ -14,7 +14,7 @@ module Scoutatt
 
         expose :events do |season|
           event_repo.find_all_by_season_id(season.id)
-            .sort_by { [_1.start_at, _1.title.downcase] }
+            .sort_by { [_1.title[/responsable/i] ? 0 : 1, _1.start_at, _1.title.downcase] }
         end
 
         expose :registrations do |events|

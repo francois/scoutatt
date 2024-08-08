@@ -6,8 +6,11 @@ module Scoutatt
   module Actions
     module Events
       class Create < Scoutatt::Action
-        include Deps["repos.season_repo"]
-        include Deps["repos.event_repo"]
+        include Deps[
+          "repos.season_repo",
+          "repos.event_repo",
+          view: "views.events.index"
+        ]
 
         params do
           required(:slug).filled(:string)
@@ -23,7 +26,7 @@ module Scoutatt
         end
 
         def handle(request, response)
-          raise request.params.errors.inspect unless request.params.valid?
+          halt 422, response.render(view, slug: request.params[:slug]) unless request.params.valid?
 
           season = season_repo.find_by!(slug: request.params[:slug])
 

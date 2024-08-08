@@ -1,11 +1,15 @@
-<h1>Ajouter une nouvelle saison</h1>
+<div class="row">
+  <div class="col">
+    <h1>Ajouter une nouvelle saison</h1>
 
-<%= form_for :season, routes.path(:create_season) do |f| %>
-  <p>
-    <%= f.label "Nom", for: :title %>
-    <%= f.text_field :title %>
-  </p>
-  <p>
-    <%= f.submit "Enregistrer" %>
-  </p>
-<% end %>
+    <%= form_for :season, routes.path(:create_season) do |f| %>
+      <div class="mb-3">
+        <%= f.label "Nom de la nouvelle saison", for: :title, class: "form-label" %>
+        <%= f.text_field :title, class: "form-control" %>
+      </div>
+      <div class="mb-3">
+        <%= f.submit "Enregistrer", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>

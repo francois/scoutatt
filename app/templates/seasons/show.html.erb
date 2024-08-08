@@ -1,69 +1,102 @@
-<h1><%= season.title %></h1>
-<h2>Intructions</h2>
-<p>
-Inscrivez votre ou vos enfants aux différentes activités du Groupe. Si vous
-resterez, n'oubliez pas d'inscrire votre nom à vous aussi!
-</p>
-<p>
-Les règles de notre Groupe demandent à ce que chaque enfant travaille 2 quarts de travail de 2 heures chacun (4 heures
-de bénévolat). S'il n'est pas disponible, un représentant pourra venir à sa place.
-</p>
-
-<h3>Exemples</h3>
-<dl>
-  <dt>Votre enfant viendra seul:</dt>
-  <dd><ol><li>Nom: Pierre Tremblay, Rôle: Castors</li></ol></dd>
-  <dt>Vous et votre enfant viendrez:</dt>
-  <dd>
-    <ol>
-      <li>Nom: Pierre Tremblay, Rôle: Castors</li>
-      <li>Nom: Papa de Pierre Tremblay, Rôle: Castors</li>
-    </ol>
-  </dd>
-  <dt>Grand-maman viendra <strong>à la place de</strong> votre enfant</dt>
-  <dd><ol><li>Nom: Grand-maman de Pierre Tremblay, Rôle: Castors</li></ol></dd>
-</dl>
-
-<% count = -1 %>
-<%= form_for :registration, routes.path(:create_registrations, slug: season.slug) do |f| %>
-  <h2>Inscription</h2>
-  <div>
-    <%= f.label "À quelle adresse courriel voulez-vous recevoir un rappel?", for: :email %>
-    <br>
-    <%= f.email_field :email, placeholder: "moi@hotmail.com", required: true, size: 50 %>
+<div class="row">
+  <div class="col">
+    <h1><%= season.title %></h1>
+    <h2>Intructions</h2>
     <p>
-    Vous recevrez un courriel de rappel un ou deux jours avant l'événement à
-    cette adresse courriel.
+    Inscrivez votre ou vos enfants aux différentes activités du Groupe. Si vous
+    resterez, n'oubliez pas d'inscrire votre nom à vous aussi!
     </p>
-  </div>
+    <p>
+    Les règles de notre Groupe demandent à ce que chaque enfant travaille 2 quarts de travail de 2 heures chacun (4 heures
+    de bénévolat). S'il n'est pas disponible, un représentant pourra venir à sa place.
+    </p>
 
-  <% f.fields_for :events do |f0| %>
-    <% events.each do |event| %>
-      <h2><%= event.title %></h2>
-      <p><%= time event.start_at, timezone: season.timezone %></p>
+    <h3>Exemples</h3>
+    <dl>
+      <dt>Votre enfant viendra seul:</dt>
+      <dd><ol><li>Nom: Pierre Tremblay, Rôle: Castors</li></ol></dd>
+      <dt>Vous et votre enfant viendrez:</dt>
+      <dd>
+        <ol>
+          <li>Nom: Pierre Tremblay, Rôle: Castors</li>
+          <li>Nom: Papa de Pierre Tremblay, Rôle: Castors</li>
+        </ol>
+      </dd>
+      <dt>Grand-maman viendra <strong>à la place de</strong> votre enfant</dt>
+      <dd><ol><li>Nom: Grand-maman de Pierre Tremblay, Rôle: Castors</li></ol></dd>
+    </dl>
 
-      <% (event.max_registrations - (registrations[event.id] || []).size).times do %>
-        <% count += 1 %>
-        <% f0.fields_for(count) do |f1| %>
+    <% count = -1 %>
+    <%= form_for :registration, routes.path(:create_registrations, slug: season.slug) do |f| %>
+      <h2>Inscription</h2>
+      <%= f.label "À quelle adresse courriel voulez-vous recevoir un rappel?", for: :email, class: "form-label" %>
+      <%= f.email_field :email, placeholder: "moi@hotmail.com", required: true, class: "form-control", autocomplete: "home email" %>
+      <p class="form-text">
+      Vous recevrez un courriel de rappel un ou deux jours avant l'événement à
+      cette adresse courriel.
+      </p>
+
+      <% f.fields_for :events do |f0| %>
+        <% events.group_by(&:start_at).each do |start_at, evs| %>
           <div>
-            <%= f1.hidden_field :event_id, value: event.slug %>
-            <%= f1.label "Prénom et nom", for: :name %>
-            <%= f1.text_field :name, placeholder: "Pierre Tremblay", size: 30 %>
-            <%= f1.label "Rôle", for: :role %>
-            <%= f1.text_field :role, placeholder: "Castors, Chouettes, Directeur, etc.", size: 30, list: "roles" %>
+            <h2><%= time start_at, timezone: 'America/Montreal' %></h2>
+            <% evs.each do |event| %>
+              <h4><%= event.title %></h4>
+
+              <% (event.max_registrations - (registrations[event.id] || []).size).times do %>
+                <div class="row mb-2 mb-md-1">
+                  <% count += 1 %>
+                  <% f0.fields_for(count) do |f1| %>
+                    <%= f1.hidden_field :event_id, value: event.slug %>
+                    <div class="col d-inline-flex">
+                      <div class="flex-grow-1 px-2">
+                        <%= f1.label "Prénom et nom", for: :name, class: "visually-hidden form-label" %>
+                        <%= f1.text_field :name, placeholder: "Prénom et nom", class: "form-control", autocomplete: :off %>
+                      </div>
+                      <div class="px-2">
+                        <%= f1.label "Rôle", for: :role, class: "form-label visually-hidden" %>
+                        <%= f1.text_field :role, placeholder: "Unité ou rôle", list: "roles", class: "form-control", autocomplete: :off %>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>
+
+              <% if event.title =~ /responsable/i %>
+                <% Array(registrations[event.id]).each do |registration| %>
+                  <div class="row mb-2 mb-md-1">
+                    <div class="col d-inline-flex">
+                      <div class="px-2">
+                        <%= registration.name %>
+                      </div>
+                      <div class="px-2">
+                        <%= registration.role %>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              <% else %>
+                <% Array(registrations[event.id]).group_by(&:role).transform_values(&:count).each do |role, num_registrations| %>
+                  <div class="row mb-2 mb-md-1">
+                    <div class="col d-inline-flex">
+                      <div class="px-2">
+                        <%= num_registrations %> inscrit(s) aux <%= role %>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+            <% end %>
           </div>
+          <hr class="my-4">
         <% end %>
       <% end %>
 
-      <% Array(registrations[event.id]).each do |registration| %>
-        <div>occupé</div>
-      <% end %>
+      <%= f.button "Enregistrer" %>
     <% end %>
-    </div>
-  <% end %>
+  </div>
+</div>
 
-  <%= f.button "Enregistrer" %>
-<% end %>
 <datalist id="roles">
   <option>Castors</option>
   <option>Aigles</option>
