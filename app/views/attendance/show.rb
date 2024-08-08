@@ -4,10 +4,10 @@ module Scoutatt
   module Views
     module Attendance
       class Show < Scoutatt::View
-        include Deps["repos.season_repo"]
-        include Deps["repos.event_repo"]
-        include Deps["repos.registration_repo"]
-        include Deps["repos.attendance_repo"]
+        include Deps['repos.season_repo']
+        include Deps['repos.event_repo']
+        include Deps['repos.registration_repo']
+        include Deps['repos.attendance_repo']
 
         expose :event do |slug:|
           event_repo.find_by!(slug:)
@@ -19,14 +19,14 @@ module Scoutatt
 
         expose :registrations do |event|
           registration_repo.find_all_by(event_id: event.id)
-            .sort_by { [_1.role.downcase, _1.name.downcase] }
-            .group_by { _1.role.downcase }
+                           .sort_by { [_1.role.downcase, _1.name.downcase] }
+                           .group_by { _1.role.downcase }
         end
 
         expose :attendances do |event|
           attendance_repo.find_all_by(event_id: event.id)
-            .sort_by { [_1.role.downcase, _1.name.downcase] }
-            .group_by { _1.role.downcase }
+                         .sort_by { [_1.role.downcase, _1.name.downcase] }
+                         .group_by { _1.role.downcase }
         end
 
         expose :roles do |registrations, attendances|

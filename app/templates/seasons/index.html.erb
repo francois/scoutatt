@@ -23,11 +23,9 @@
             <% end %>
             </p>
 
-            <%= link_to "Gestion", routes.path(:events, slug: season.slug), class: "card-link" %>
+            <%= link_to "Événements", routes.path(:events, slug: season.slug), class: "card-link" %>
             <%= link_to "Inscriptions", routes.path(:show_season, slug: season.slug), class: "card-link" %>
-            <%= form_for :season, routes.path(:destroy_season, slug: season.slug), method: :delete do |f| %>
-              <%= f.submit "Détruire", class: "btn btn-danger btn-sm card-link" %>
-            <% end %>
+            <%= link_to "Présences", routes.path(:select_event_for_attendance, season_slug: season.slug), class: "card-link" %>
           </div>
         </div>
       <% end %>

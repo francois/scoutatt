@@ -1,23 +1,18 @@
 # auto_register: false
 # frozen_string_literal: true
 
-require "tzinfo"
+require 'tzinfo'
 
 module Scoutatt
   module Views
     module Helpers
       def time(timestamp, timezone:)
-        format = "%Y-%m-%dT%H:%M:%S%z"
+        format = '%Y-%m-%dT%H:%M:%S%z'
         tz = TZInfo::Timezone.get(timezone)
         tsutc = timestamp.utc
         tag.time(datetime: tsutc.strftime(format), title: tz.utc_to_local(tsutc).strftime(format)) do
-          tz.utc_to_local(tsutc).strftime("%-d %-b %Y, %H:%M")
+          tz.utc_to_local(tsutc).strftime('%-d %-b %Y, %H:%M')
         end
-      end
-
-      def titleize(string)
-        match = string.match(/^(.)(.*)/)
-        "#{match[1].upcase}#{match[2]}"
       end
 
       def debug(value)

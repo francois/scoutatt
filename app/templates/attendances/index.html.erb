@@ -1,0 +1,18 @@
+<h1><%= season.title %></h1>
+<p>Sélectionnez l'événement:</p>
+
+<% events.each do |event| %>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">
+        <%= time event.start_at, timezone: 'America/Montreal' %>
+        <%= event.title %>
+      </h5>
+      <p class="card-text">
+      <%= registrations[event.id] || 0 %> personnes attendues
+      </p>
+
+      <%= link_to "Présences", routes.path(:attendances, event_slug: event.slug) %>
+    </div>
+  </div>
+<% end %>
