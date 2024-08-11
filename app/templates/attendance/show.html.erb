@@ -53,17 +53,25 @@
 <div class="row">
   <div class="col">
     <%= form_for(:attendance, routes.path(:create_attendance, event_slug: event.slug), method: :post) do |f| %>
-      <div>
-        <%= f.label "Prénom et nom", for: :name %>
-        <%= f.text_field :name, placeholder: "John Smith" %>
+      <div class="row my-2">
+        <%= f.label "Prénom et nom", for: :name, class: "col-md-2 col-form-label" %>
+        <div class="col-md-10">
+          <%= f.text_field :name, placeholder: "John Smith", class: "form-control", autocomplete: :off %>
+        </div>
       </div>
-      <div>
-        <%= f.label "Rôle", for: :role %>
-        <%= f.text_field :role, placeholder: "Éclaireurs" %>
+      <div class="row my-2">
+        <%= f.label "Rôle", for: :role, class: "col-md-2 col-form-label" %>
+        <div class="col-md-10">
+          <%= f.text_field :role, placeholder: "Éclaireurs", list: "roles", class: "form-control", autocomplete: :off %>
+        </div>
       </div>
-      <div>
-        <%= f.submit "Enregistrer" %>
+      <div class="row my-2">
+        <div class="col">
+          <%= f.submit "Enregistrer", class: "btn btn-primary" %>
+        </div>
       </div>
     <% end %>
   </div>
 </div>
+
+<%= render "shared/roles_datalist" %>
