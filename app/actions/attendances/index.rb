@@ -9,12 +9,13 @@ module Scoutatt
 
         def handle(request, response)
           response.render(view, season_slug: request.params[:season_slug],
-                                timespan: eight_hours_ago...forty_eight_hours_from_now)
+            timespan: eight_hours_ago...forty_eight_hours_from_now)
         end
 
         private
 
         def eight_hours_ago = Time.now - EIGHT_HOURS_IN_SECONDS
+
         def forty_eight_hours_from_now = Time.now + FORTY_EIGHT_HOURS_IN_SECONDS
       end
     end

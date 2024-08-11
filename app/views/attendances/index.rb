@@ -5,9 +5,9 @@ module Scoutatt
     module Attendances
       class Index < Scoutatt::View
         include Deps[
-          'repos.season_repo',
-          'repos.event_repo',
-          'repos.registration_repo'
+          "repos.season_repo",
+          "repos.event_repo",
+          "repos.registration_repo"
         ]
 
         expose :season do |season_slug:|
@@ -23,8 +23,8 @@ module Scoutatt
 
         expose :registrations do |events|
           registration_repo.find_all_by(event_id: events.map(&:id))
-                           .group_by(&:event_id)
-                           .transform_values(&:count)
+            .group_by(&:event_id)
+            .transform_values(&:count)
         end
       end
     end
