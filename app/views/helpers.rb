@@ -6,12 +6,10 @@ require "tzinfo"
 module Scoutatt
   module Views
     module Helpers
-      def time(timestamp, timezone:)
+      def time(timestamp)
         format = "%Y-%m-%dT%H:%M:%S%z"
-        tz = TZInfo::Timezone.get(timezone)
-        tsutc = timestamp.utc
-        tag.time(datetime: tsutc.strftime(format), title: tz.utc_to_local(tsutc).strftime(format)) do
-          tz.utc_to_local(tsutc).strftime("%-d %-b %Y, %H:%M")
+        tag.time(datetime: timestamp.strftime(format), title: timestamp.strftime(format)) do
+          timestamp.strftime("%-d %-b %Y, %H:%M")
         end
       end
 

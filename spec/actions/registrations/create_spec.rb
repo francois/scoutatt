@@ -7,7 +7,7 @@ RSpec.describe Scoutatt::Actions::Registrations::Create do
   let(:registration_repo) { Hanami.app["repos.registration_repo"] }
 
   context "given a season, an event, and a slot" do
-    let!(:season) { season_repo.create(title: "2023-2024", timezone: "America/New_York") }
+    let!(:season) { season_repo.create(title: "2023-2024") }
     let!(:event) { event_repo.create(season:, title: "IGA") }
     let!(:slot) { slot_repo.create(event:, start_at: "2024-01-05T09:00-0400") }
 

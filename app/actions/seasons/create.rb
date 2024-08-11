@@ -20,7 +20,7 @@ module Scoutatt
           end
 
           title = request.params[:season][:title]
-          season_repo.create(title:, timezone: "America/New_York")
+          season_repo.create(title:)
 
           response.flash[:notice] = "Saison #{title} enregistrée"
           response.redirect_to routes.path(:seasons)

@@ -8,7 +8,7 @@
       <% events.group_by(&:start_at).each do |start_at, evs| %>
         <div class="row py-2 my-2">
           <div class="col bg-body-secondary">
-            <h2><%= time start_at, timezone: 'America/Montreal' %></h2>
+            <h2><%= time start_at %></h2>
           </div>
         </div>
         <% evs.each do |event| %>

@@ -36,7 +36,6 @@ module Scoutatt
         else
           attributes.fetch(:season_id)
         end
-        attributes[:start_at] = attributes.delete(:start_at).utc if attributes.include?(:start_at)
         attrs = {
           season_id:, season: nil,
           slug: SecureRandom.alphanumeric(4).downcase,
@@ -48,7 +47,6 @@ module Scoutatt
       end
 
       def update(slug, attributes)
-        attributes[:start_at] = attributes.delete(:start_at).utc if attributes.include?(:start_at)
         attrs = {updated_at: Time.now}.merge(attributes)
         events.where(slug:).changeset(:update, attrs).commit
       end

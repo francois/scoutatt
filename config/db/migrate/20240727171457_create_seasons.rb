@@ -7,7 +7,6 @@ ROM::SQL.migration do
 
       column :title, :text, null: false
       column :slug, :text, null: false
-      column :timezone, :text, null: false
 
       column :created_at, :timestamp, null: false
       column :updated_at, :timestamp, null: false

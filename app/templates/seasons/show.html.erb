@@ -39,7 +39,7 @@
       <% f.fields_for :events do |f0| %>
         <% events.group_by(&:start_at).each do |start_at, evs| %>
           <div>
-            <h2><%= time start_at, timezone: 'America/Montreal' %></h2>
+            <h2><%= time start_at %></h2>
             <% evs.each do |event| %>
               <h4><%= event.title %></h4>
 

@@ -36,10 +36,8 @@ module Scoutatt
             .step(request.params[:event][:hours_per_shift])
             .to_a
 
-          tz = TZInfo::Timezone.get("America/Montreal")
           new_events = Array(title).product(dates, hours).flat_map do |title, date, hour|
-            date = Date.parse(date)
-            start_at = tz.local_time(date.year, date.month, date.day, hour)
+            start_at = Time.parse("#{date} #{hour}:00")
             [
               {
                 season:, start_at:, title:,
