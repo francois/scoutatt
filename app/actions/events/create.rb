@@ -21,7 +21,7 @@ module Scoutatt
             required(:max_hour).filled(:integer, gteq?: 0, lteq?: 24)
             required(:hours_per_shift).filled(:integer, gteq?: 1, lt?: 24)
             required(:registrations_per_shift).filled(:integer, gteq?: 1, lt?: 100)
-            required(:adult_registrations_per_shift).filled(:integer, gteq?: 1, lt?: 100)
+            required(:adult_registrations_per_shift).filled(:integer, gteq?: 0, lt?: 100)
           end
         end
 

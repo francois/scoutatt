@@ -106,7 +106,7 @@
       </div>
 
       <div class="mb-3 form-floating">
-        <%= f.number_field :adult_registrations_per_shift, min: 1, max: 100, class: "form-control", required: true %>
+        <%= f.number_field :adult_registrations_per_shift, min: 0, max: 100, class: "form-control", required: true %>
         <%= f.label "Nombre de responsables par quart de travail", for: :registrations_per_shift, class: "form-label" %>
         <% if request.params.errors.include?(:adult_registrations_per_shift) %>
           <p class="form-text">
