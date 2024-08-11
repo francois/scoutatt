@@ -1,8 +1,6 @@
 # auto_register: false
 # frozen_string_literal: true
 
-require "tzinfo"
-
 module Scoutatt
   module Views
     module Helpers
