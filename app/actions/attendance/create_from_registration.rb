@@ -22,6 +22,8 @@ module Scoutatt
           else
             registration = registration_repo.find_by!(slug: request.params[:registration_slug])
             attendance = attendance_repo.create(**registration.to_h.slice(:event_id, :slug, :name, :role))
+            attendance.mark_present
+            attendance_repo.update(attendance.slug, attendance.attributes)
           end
 
           response.redirect_to routes.path(:attendances, event_slug: event_repo.find_by_id!(attendance.event_id).slug)
