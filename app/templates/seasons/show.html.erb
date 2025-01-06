@@ -46,7 +46,7 @@
                 </div>
               <% end %>
 
-              <% if event.title =~ /responsable/i %>
+              <% if event.title =~ /(?:responsable|anim|gestionnaire)/i %>
                 <% Array(registrations[event.id]).each do |registration| %>
                   <div class="row mb-2 mb-md-1">
                     <div class="col d-inline-flex">
