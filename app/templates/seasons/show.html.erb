@@ -25,6 +25,7 @@
           <div>
             <h2><%= time start_at %></h2>
             <% evs.each do |event| %>
+              <% next unless (event.max_registrations - (registrations[event.id] || []).size).nonzero? %>
               <h4><%= event.title %></h4>
 
               <% (event.max_registrations - (registrations[event.id] || []).size).times do %>
